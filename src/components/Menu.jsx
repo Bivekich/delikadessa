@@ -1,31 +1,34 @@
 import React from 'react'
+import m1 from '../assets/m1.png'
+import m2 from '../assets/m2.png'
 
 function Menu() {
   return (
     <div className="flex flex-col items-center">
-                    <h1 className="text-3xl font-bold text-purple-900 mt-10 mb-10">Наше меню</h1>
-                    <div className="flex justify-center space-x-10">
-                        <div className="flex flex-col items-center">
-                            <div className="bg-white rounded-lg shadow-lg p-6">
-                                <img src="" alt="Illustration of a woman sitting on a wine bottle with the text 'To be selective!'" className="rounded-lg"/>
-                            </div>
-                            <p className="text-purple-900 mt-4">Меню ресторана</p>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <div className="bg-white rounded-lg shadow-lg p-6">
-                                <img src="" alt="Illustration of a woman sitting on a wine bottle with the text 'To be selective!'" className="rounded-lg"/>
-                                <p className="text-center text-brown-900 mt-4">BAR</p>
-                            </div>
-                            <p className="text-purple-900 mt-4">Барное меню</p>
-                        </div>
-                        <div className="flex flex-col items-center">
-                            <div className="bg-white rounded-lg shadow-lg p-6">
-                                <img src="" alt="Illustration of a woman sitting on a wine bottle with the text 'To be selective!'" className="rounded-lg"/>
-                            </div>
-                            <p className="text-purple-900 mt-4">Меню Тортов</p>
-                        </div>
-                    </div>
-                </div>
+      <h1 className="font-['Kornilow'] text-[40px] font-normal leading-[85px] text-left text-[#7E6783] mt-10 mb-10">
+        Наше меню
+      </h1>
+      <div className="flex justify-center space-x-10">
+        <div className="flex flex-col items-center">
+          <div className="shadow-2xl rounded-3xl transition-transform duration-300 hover:scale-110">
+            <img src={m1} alt="m1" className="rounded-3xl"/>
+          </div>
+          <p className="font-['Kornilow'] text-[25px] font-normal leading-[85px] text-left text-[#722082] mt-4">Меню ресторана</p>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="shadow-2xl rounded-3xl transition-transform duration-300 hover:scale-110">
+            <img src={m2} alt="m2" className="rounded-3xl"/>
+          </div>
+          <p className="font-['Kornilow'] text-[25px] font-normal leading-[85px] text-left text-[#722082] mt-4">Барное меню</p>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="shadow-2xl rounded-3xl transition-transform duration-300 hover:scale-110">
+            <img src={m1} alt="m3" className="rounded-3xl"/>
+          </div>
+          <p className="font-['Kornilow'] text-[25px] font-normal leading-[85px] text-left text-[#722082] mt-4">Меню Тортов</p>
+        </div>
+      </div>
+    </div>
   )
 }
 

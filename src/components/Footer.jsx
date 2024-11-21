@@ -4,10 +4,10 @@ import logo from '../assets/logo.svg';
 const Footer = () => {
   return (
     <div>
-     <footer className="bg-white py-6">
+     <footer className="bg-white py-12">
      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
      <div className="flex items-center mb-4 md:mb-0">
-      <img src={logo} alt="logo" className="h-200 w-200"/>
+      <img src={logo} alt="logo" className="h-200 w-200 p-5"/>
      </div>
      <div className="flex flex-col md:flex-row md:space-x-12 text-center md:text-left">
      <div className="mb-4 md:mb-0">
