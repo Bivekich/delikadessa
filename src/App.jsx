@@ -4,6 +4,8 @@ import Footer from "./components/Footer";
 import Gallery from "./components/Gallery";
 import Menu from "./components/Menu";
 import About from "./components/About";
+import Cake from "./components/Cake";
+import Contact from "./components/Contact";
 function App() {
 
   return (
@@ -13,6 +15,8 @@ function App() {
       <Gallery/>
       <Menu/>
       <About/>
+      <Cake/>
+      <Contact/>
       <Footer/>
     </div>
   )
