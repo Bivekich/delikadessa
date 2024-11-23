@@ -1,3 +1,5 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
@@ -6,19 +8,22 @@ import Menu from "./components/Menu";
 import About from "./components/About";
 import Cake from "./components/Cake";
 import Contact from "./components/Contact";
-function App() {
 
+function App() {
   return (
-    <div>
+    <Router>
       <Navbar/>
+      <Routes>
+        <Route path="/" element={<Body />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/cake" element={<Cake />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
       <Body/>
-      <Gallery/>
-      <Menu/>
-      <About/>
-      <Cake/>
-      <Contact/>
       <Footer/>
-    </div>
+    </Router>
   )
 }
 export default App
