@@ -4,7 +4,7 @@ import m2 from '../assets/m2.png'
 
 function Menu() {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center overflow-hidden mx-auto px-4">
       <h1 className="font-['Kornilow'] text-[40px] font-normal leading-[85px] text-left text-[#7E6783] mt-10 mb-10">
         Наше меню
       </h1>

@@ -7,8 +7,8 @@ import cake5 from '../assets/cake5.png'
 
 function Cake() {
   return (
-    <div>
-         <div>
+    <div className="container mx-auto overflow-hidden">
+         <div className="overflow-hidden mx-auto px-4"  >
           <main className="text-center py-4">
           <h1 className="text-3xl font-bold text-[#722082] mb-4" style={{ fontFamily: 'Kornilow', fontSize: '40px', fontWeight: 400, lineHeight: '60px' }}>Торты на заказ</h1>
           <p className="text-lg text-[#722082] mb-1" style={{ fontFamily: 'Kornilow', fontSize: '25px', fontWeight: 400, lineHeight: '30px' }}>Индивидуальный дизайн, для уточнения свяжитесь по телефону</p>

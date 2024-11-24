@@ -53,7 +53,7 @@ function About() {
               }}>
                 Терраса
               </h2>
-              <p className="text-[#5C6574] mb-4" style={{
+              <p className="text-[#5C6574] mb-4 px-4" style={{
                 fontFamily: 'Inter',
                 fontSize: '16px',
                 fontWeight: 400,
@@ -87,7 +87,7 @@ function About() {
         </div>
       </div>
 
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center min-h-screen pt-24">
                     <div className="flex flex-col md:flex-row items-center p-8 rounded-lg">
                         <div className="flex flex-col space-y-6">
                             <h1 className="text-3xl text-center md:text-left text-purple-900 mb-8">Наши преимущества</h1>

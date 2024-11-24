@@ -13,17 +13,22 @@ function App() {
   return (
     <Router>
       <Navbar/>
-      <Routes>
+      {/*<Routes>
         <Route path="/" element={<Body />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/about" element={<About />} />
         <Route path="/cake" element={<Cake />} />
         <Route path="/contact" element={<Contact />} />
-      </Routes>
+      </Routes>*/}
       <Body/>
+      <Gallery/>
+      <Menu/>
+      <About/>
+      <Cake/>
+      <Contact/>
       <Footer/>
-    </Router>
+  </Router>
   )
 }
 export default App

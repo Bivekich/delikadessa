@@ -5,14 +5,15 @@ import location from '../assets/location.svg';
 
 const Navbar = () => {
   return (
-    <nav className="bg-white fixed top-0 left-0 w-full z-10">
+    <main className="container mx-auto px-4"> 
+    <nav className="bg-white fixed top-0 left-0 w-full z-10 overflow-x-auto">
       <div className="container m-0 px-6 py-2 flex items-center justify-between">
         <div className="flex items-center">
           <Link to="/"> 
             <img src={logo} alt="logo" className='h-20' />
           </Link>
         </div>
-        <ul className="flex space-x-6 text-[#722082] h-full text-s font-['Inter'] text-base font-normal leading-[29px] text-left underline-offset-[from-font] decoration-skip-ink-none mb-0">
+        <ul className="flex space-x-6 text-[#722082] h-full text-s font-['Inter'] text-base font-normal leading-[29px] text-left underline-offset-[from-font] decoration-skip-ink-none mb-0 flex-wrap">
           <li>
             <Link to="/menu">
               Меню
@@ -60,6 +61,7 @@ const Navbar = () => {
           </ul>
       </div>
     </nav>
+    </main>
   );
 };
 

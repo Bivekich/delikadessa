@@ -10,7 +10,7 @@ import g8 from '../assets/g8.png'
 
 function Gallery() {
   return (
-    <div className="text-center py-8">
+    <div className="text-center py-8 overflow-hidden mx-auto px-4">
       <h1 style={{
         fontFamily: 'Kornilow',
         fontSize: '60px',
