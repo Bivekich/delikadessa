@@ -4,7 +4,7 @@ import ab2 from '../assets/ab2.png'
 
 function About() {
   return (
-    <div className="container mx-auto px-4 py-8 mb-8">
+    <div className="container mx-auto px-4 pt-44 pb-8 mb-8">
       <div className="flex flex-col md:flex-row gap-8 items-start relative">
         <div className="md:w-1/2 relative">
           <img 

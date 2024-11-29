@@ -1,79 +1,70 @@
 import React from 'react'
-import main_image from '../assets/main.png'
+import main_image from '../assets/main_img.png'
 
 const Body = () => {
   return (
-    <main>
+    <main className='pt-44' style={{ backgroundImage: `url(${main_image})` }}>
      <section className="relative mx-auto" style={{
-        width: '1708.39px',
-        height: '871px',
-        marginTop: '100px',
-        marginLeft: '106px',
+        margin: '100px',
         overflow: 'hidden'
-      }}>
-      <img src={main_image} alt="main_image" className="w-full h-full object-cover"/>
-        <div className="absolute inset-0 flex flex-col justify-center items-start text-left text-white px-4">
-         <h1 className="absolute" style={{
-           width: '870px',
-           height: '134px',
-           top: '310px',
-           left: '196px',
-           fontFamily: 'Kornilow',
-           fontSize: '70px',
-           fontWeight: 400,
-           lineHeight: '85px',
-           textAlign: 'left',
-           textUnderlinePosition: 'from-font',
-           textDecorationSkipInk: 'none'
-         }}>Ресторан «ДеликАдесса» — место для приятных встреч</h1>
-         <p className="mt-4" style={{
-           fontFamily: 'Inter',
-           fontSize: '16px',
-           fontWeight: 500,
-           lineHeight: '29px',
-           textAlign: 'left',
-           width: '880px',
-           marginTop: '350px',
-           marginLeft: '196px'
-         }}>Основные продукты (выпечка и десерты) и современные техники приготовления — три главных принципа кухни ДеликАдессы.</p>
-         <p className="mt-2" style={{
-           fontFamily: 'Inter',
-           fontSize: '16px',
-           fontWeight: 500,
-           lineHeight: '29px',
-           textAlign: 'left',
-           width: '880px',
-           marginLeft: '196px'
-         }}>В нашем ресторане каждый гость сможет заказать блюда по индивидуальному пожеланию, чтобы ваш вечер прошёл незабываемо!</p>
-         <p className="mt-2" style={{
-           fontFamily: 'Inter',
-           fontSize: '16px',
-           fontWeight: 500,
-           lineHeight: '29px',
-           textAlign: 'left',
-           width: '880px',
-           marginLeft: '196px'
-         }}>Будем рады видеть вас в гостях, чтобы показать вам, например, что такое изысканный ужин!</p>
-         <button 
-           className="mt-4 bg-[#722082] hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-tl-2xl rounded-br-2xl rounded-tr-md rounded-bl-md shadow" 
-           style={{ 
-             marginLeft: '196px',
-             fontFamily: 'Kornilow',
-             fontSize: '30px',
-             fontWeight: 400,
-             lineHeight: '29px',
-             textAlign: 'center',
-             textUnderlinePosition: 'from-font',
-             textDecorationSkipInk: 'none',
-             width: '302px',
-             height: '72px',
-           }}>
-           Забронировать
-         </button>
-        </div>
-       </section>
-       <section className="container mx-auto my-12 p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-center text-2xl font-bold text-[#7E6783]" style={{
+        }}>
+     <div className="relative ">
+                    <div className="relative flex flex-col items-start justify-center h-full p-6 md:p-10 text-white">
+                        <h1 className="text-3xl md:text-5xl font-bold mb-4 pt-100 pb-100"  style={{
+                          fontFamily: 'Kornilow',
+                          fontSize: 'clamp(2rem, 5vw + 1rem, 4rem)',
+                          fontWeight: 400,
+                          lineHeight: '85px',
+                          textAlign: 'left',
+                          textUnderlinePosition: 'from-font',
+                          textDecorationSkipInk: 'none'
+                        }}>Ресторан «ДеликАдесса» — место для приятных встреч</h1>
+                        <p className="text-base md:text-lg mb-4" style={{
+                          fontFamily: 'Inter',
+                          fontSize: 'clamp(1rem, 2vw + 0.5rem, 1.25rem)',
+                          fontWeight: 600,
+                          lineHeight: '29px',
+                          textAlign: 'left',
+                          textUnderlinePosition: 'from-font',
+                          textDecorationSkipInk: 'none'
+                        }}>Сезонные продукты, бережное отношение к традициям и современные техники приготовления - три главных принципа кухни ДеликАдессы.</p>
+                        <p className="text-base md:text-lg mb-4" style={{
+                          fontFamily: 'Inter',
+                          fontSize: 'clamp(1rem, 2vw + 0.5rem, 1.25rem)',
+                          fontWeight: 600,
+                          lineHeight: '29px',
+                          textAlign: 'left',
+                          textUnderlinePosition: 'from-font',
+                          textDecorationSkipInk: 'none'
+                        }}>В нашем ресторане каждый гость важен, поэтому мы учитываем любое пожелание, чтобы ваш вечер прошел незабываемо!</p>
+                        <p className="text-base md:text-lg mb-8" style={{
+                          fontFamily: 'Inter',
+                          fontSize: 'clamp(1rem, 2vw + 0.5rem, 1.25rem)',
+                          fontWeight: 600,
+                          lineHeight: '29px',
+                          textAlign: 'left',
+                          textUnderlinePosition: 'from-font',
+                          textDecorationSkipInk: 'none'
+                        }}>Будем ждать вас в гости, чтобы показать на примере, что такое изысканная кухня!</p>
+                        <button 
+                         className="mt-4 bg-[#722082] hover:bg-purple-700 mb-24 text-white font-bold py-2 px-4 rounded-tl-2xl rounded-br-2xl rounded-tr-md rounded-bl-md shadow w-full md:w-auto" 
+                         style={{ 
+                         fontFamily: 'Kornilow',
+                         fontSize: 'clamp(1.5rem, 2vw + 1rem, 30px)',
+                         fontWeight: 400,
+                         lineHeight: '29px',
+                         textAlign: 'center',
+                         textUnderlinePosition: 'from-font',
+                         textDecorationSkipInk: 'none',
+                         height: '72px',
+                         }}>Забронировать
+                       </button>
+                    </div>
+                </div>
+     </section>
+       <section className='pb-64'>
+       <div className="container mx-auto my-12 p-6 bg-white bg-opacity-0 rounded-[30px] shadow-md backdrop-blur-md">
+        <h2 className="text-center text-2xl font-bold text-[#722082]" style={{
           fontFamily: 'Kornilow',
           fontSize: '40px',
           fontWeight: 400,
@@ -81,7 +72,7 @@ const Body = () => {
           textUnderlinePosition: 'from-font',
           textDecorationSkipInk: 'none'
         }}>Бронирование столика</h2>
-        <p className="text-center text-[#722082] mt-2" style={{
+        <p className="text-center text-[#7E6783] mt-2" style={{
           fontFamily: 'Kornilow',
           fontSize: '28px',
           fontWeight: 400,
@@ -128,6 +119,7 @@ const Body = () => {
             </button>
           </div>
         </form>
+        </div>
    </section>
    </main>
   )
