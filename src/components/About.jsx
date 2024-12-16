@@ -1,106 +1,82 @@
-import React from "react";
-import ab from "../assets/ab.png";
-import ab2 from "../assets/ab2.png";
-import { Link } from "react-router-dom";
-import { getAboutUs, getTerrassa } from "../sanity";
-import { useState, useEffect } from "react";
+import React from 'react';
+import ab from '../assets/ab.png';
+import ab2 from '../assets/ab2.png';
+import { Link } from 'react-router-dom';
+import { getAboutUs, getTerrassa } from '../sanity';
+import { useState, useEffect } from 'react';
+import Preloader from './Preloader';
+
 function About() {
   const [aboutUs, setAboutUs] = useState([]);
   const [terassa, setTerrassa] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
     const fetchAboutUs = async () => {
-      const aboutUs = await getAboutUs();
-      setAboutUs(aboutUs);
-      const terrace = await getTerrassa();
-      setTerrassa(terrace);
+      try {
+        const aboutUsData = await getAboutUs();
+        const terrassaData = await getTerrassa();
+        setAboutUs(aboutUsData);
+        setTerrassa(terrassaData);
+        setLoading(false);
+        setTimeout(() => setIsVisible(true), 100);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      }
     };
     fetchAboutUs();
   }, []);
 
+  if (loading) {
+    return <Preloader />;
+  }
+
   return (
-    <div className="mx-auto px-4 pt-14 pb-8 mb-8">
-      <div className="flex flex-col md:flex-row gap-8 items-start relative">
-        <div className=" relative">
-          <img
-            src={ab}
-            alt="ab"
-            className="md:w-2/3 w-full h-auto object-cover rounded-3xl"
-          />
-          <div className="md:w-[80%] absolute right-[-20%] bottom-[-25%] w-1/3 z-10">
-            <div className="bg-white p-8 md:p-5 rounded-3xl shadow-lg relative z-30">
+    <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div
+        className={`transition-all duration-1000 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}
+      >
+        <div className="flex flex-col lg:flex-row gap-8 items-center lg:items-start mb-24">
+          <div className="w-full lg:w-1/2 relative">
+            <img
+              src={ab}
+              alt="О нас"
+              className="w-full rounded-3xl shadow-lg"
+            />
+          </div>
+
+          <div className="w-full lg:w-1/2 space-y-6">
+            <div className="bg-white p-6 md:p-8 rounded-3xl shadow-lg">
               <h2
-                className="text-xl ml-4 font-bold text-purple-900 mb-4"
-                style={{
-                  fontFamily: "Kornilow",
-                  fontSize: "32px",
-                  fontWeight: 400,
-                  lineHeight: "45px",
-                  textAlign: "left",
-                  textUnderlinePosition: "from-font",
-                  textDecorationSkipInk: "none",
-                }}
+                className="text-2xl md:text-3xl text-[#722082] mb-4"
+                style={{ fontFamily: 'Kornilow' }}
               >
                 {aboutUs.title}
               </h2>
-              <p
-                className="text-[#5C6574] px-4"
-                style={{
-                  fontFamily: "Inter",
-                  fontSize: "14px",
-                  fontWeight: 400,
-                  lineHeight: "1.5",
-                  textAlign: "justify",
-                  textUnderlinePosition: "from-font",
-                  textDecorationSkipInk: "none",
-                }}
-              >
+              <p className="text-[#5C6574] text-base md:text-lg leading-relaxed">
                 {aboutUs.description}
               </p>
             </div>
-            <div className="bg-white ml-4 p-8 md:p-5 rounded-3xl shadow-lg -mt-8 relative z-10 mr-2 md:mr-4 -ml-4 md:-ml-8">
+
+            <div className="bg-white p-6 md:p-8 rounded-3xl shadow-lg">
               <h2
-                className="text-2xl font-bold text-purple-900 mb-4 mt-2"
-                style={{
-                  fontFamily: "Kornilow",
-                  fontSize: "32px",
-                  fontWeight: 400,
-                  lineHeight: "45px",
-                  textAlign: "left",
-                  textUnderlinePosition: "from-font",
-                  textDecorationSkipInk: "none",
-                }}
+                className="text-2xl md:text-3xl text-[#722082] mb-4"
+                style={{ fontFamily: 'Kornilow' }}
               >
                 {terassa.title}
               </h2>
-              <p
-                className="text-[#5C6574] mb-4 px-4"
-                style={{
-                  fontFamily: "Inter",
-                  fontSize: "14px",
-                  fontWeight: 400,
-                  lineHeight: "1.5",
-                  textAlign: "justify",
-                  textUnderlinePosition: "from-font",
-                  textDecorationSkipInk: "none",
-                }}
-              >
+              <p className="text-[#5C6574] text-base md:text-lg leading-relaxed mb-6">
                 {terassa.shortDescription}
               </p>
               <div className="flex justify-end">
                 <Link
                   to="/terassa"
-                  className={`bg-[#722082] hover:bg-purple-700 text-white font-semibold rounded-tl-2xl rounded-br-2xl rounded-tr-md rounded-bl-md shadow w-full md:w-auto h-18 text-lg py-4 px-7`}
-                  style={{
-                    fontFamily: "Kornilow",
-                    fontSize: "20px",
-                    fontWeight: 400,
-                    lineHeight: "29px",
-                    textAlign: "center",
-                    textUnderlinePosition: "from-font",
-                    textDecorationSkipInk: "none",
-                    width: "235px",
-                    height: "64px",
-                  }}
+                  className="bg-[#722082] hover:bg-[#8f35a1] text-white text-lg md:text-xl py-3 px-6 rounded-full transition-all duration-300 hover:scale-105"
+                  style={{ fontFamily: 'Kornilow' }}
                 >
                   Узнать больше
                 </Link>
@@ -108,34 +84,52 @@ function About() {
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="flex justify-center items-center min-h-screen pt-24">
-        <div className="flex flex-col md:flex-row items-center p-8 rounded-lg">
-          <div className="flex flex-col space-y-6">
-            <h1 className="text-3xl text-center md:text-left text-purple-900 mb-8">
+        <div className="flex flex-col lg:flex-row items-center gap-12">
+          <div className="w-full lg:w-1/2 space-y-8">
+            <h2
+              className="text-3xl md:text-4xl text-[#722082] mb-8"
+              style={{ fontFamily: 'Kornilow' }}
+            >
               Наши преимущества
-            </h1>
-            {aboutUs.advantages?.map((advantage, index) => (
-              <div key={index} className="flex items-start space-x-4">
-                <i className="fas fa-check-circle text-purple-900 text-3xl"></i>
-                <div>
-                  <h2 className="text-xl text-purple-900">
+            </h2>
+            <div className="space-y-6">
+              {aboutUs.advantages?.map((advantage, index) => (
+                <div
+                  key={index}
+                  className={`transform transition-all duration-1000 delay-[${
+                    index * 200
+                  }ms] ${
+                    isVisible
+                      ? 'opacity-100 translate-x-0'
+                      : 'opacity-0 -translate-x-10'
+                  }`}
+                >
+                  <h3 className="text-xl text-[#722082] mb-2">
                     {advantage.advantageTitle}
-                  </h2>
-                  <p className="text-gray-400">
+                  </h3>
+                  <p className="text-[#5C6574] text-base md:text-lg leading-relaxed">
                     {advantage.advantageDescription}
                   </p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-          <div className="mt-8 md:mt-0 md:ml-8">
-            <img src={ab2} alt="ab2" className="rounded-lg" />
+
+          <div className="w-full lg:w-1/2">
+            <img
+              src={ab2}
+              alt="Преимущества"
+              className="w-full rounded-3xl shadow-lg transform transition-all duration-1000 delay-500"
+              style={{
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateX(0)' : 'translateX(50px)',
+              }}
+            />
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Kornilow';
+  src: url('/fonts/Kornilow.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Kornilow', sans-serif;
+}
+
+/* Добавляем плавность для всех анимаций */
+* {
+  @apply transition-all duration-300 ease-in-out;
+}

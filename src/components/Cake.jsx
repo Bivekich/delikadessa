@@ -1,93 +1,112 @@
-import React, { useState, useEffect } from "react";
-import { getCakes } from "../sanity";
+import React, { useState, useEffect } from 'react';
+import { getCakes } from '../sanity';
+import Preloader from './Preloader';
 
-function Cake() {
+const Cake = () => {
   const [cakes, setCakes] = useState([]);
-  const [displayCount, setDisplayCount] = useState(4);
+  const [displayCount, setDisplayCount] = useState(8);
+  const [loading, setLoading] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const fetchCakes = async () => {
-      const cakes = await getCakes();
-      setCakes(cakes);
+      try {
+        const cakesData = await getCakes();
+        setCakes(cakesData);
+        setLoading(false);
+        setTimeout(() => setIsVisible(true), 100);
+      } catch (error) {
+        console.error('Error fetching cakes:', error);
+        setLoading(false);
+      }
     };
     fetchCakes();
   }, []);
 
   const handleShowMore = () => {
-    setDisplayCount((prevCount) => prevCount + 4);
+    setDisplayCount((prevCount) => prevCount + 8);
   };
 
   const displayedCakes = cakes.slice(0, displayCount);
   const hasMoreCakes = displayCount < cakes.length;
 
+  if (loading) {
+    return <Preloader />;
+  }
+
   return (
-    <div className="container mx-auto overflow-hidden">
-      <div className="overflow-hidden mx-auto px-4">
-        <main className="text-center py-4">
-          <h1
-            className="text-3xl font-bold text-[#722082] mb-4"
-            style={{
-              fontFamily: "Kornilow",
-              fontSize: "40px",
-              fontWeight: 400,
-              lineHeight: "60px",
-            }}
-          >
-            Торты на заказ
-          </h1>
+    <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div
+        className={`transition-all duration-1000 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+        }`}
+      >
+        <h1
+          className="text-3xl md:text-4xl font-bold text-[#722082] mb-8 text-center"
+          style={{ fontFamily: 'Kornilow' }}
+        >
+          Торты на заказ
+        </h1>
+        <div className="max-w-3xl mx-auto mb-12">
           <p
-            className="text-lg text-[#722082] mb-1"
-            style={{
-              fontFamily: "Kornilow",
-              fontSize: "25px",
-              fontWeight: 400,
-              lineHeight: "30px",
-            }}
+            className="text-lg md:text-xl text-[#722082] text-center mb-2"
+            style={{ fontFamily: 'Kornilow' }}
           >
             Индивидуальный дизайн, для уточнения свяжитесь по телефону
           </p>
           <p
-            className="text-lg text-[#722082] mb-4"
-            style={{
-              fontFamily: "Kornilow",
-              fontSize: "25px",
-              fontWeight: 400,
-              lineHeight: "30px",
-            }}
+            className="text-lg md:text-xl text-[#722082] text-center"
+            style={{ fontFamily: 'Kornilow' }}
           >
             Минимальное время на изготовление торта: неделя
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16 px-4">
-            {displayedCakes.map((cake) => (
-              <img
-                key={cake.title}
-                src={cake.image}
-                alt={cake.title}
-                className="w-full rounded-lg transform transition-transform duration-300 hover:scale-105"
-              />
-            ))}
-          </div>
-          {hasMoreCakes && (
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+          {displayedCakes.map((cake, index) => (
+            <div
+              key={cake._id}
+              className={`transform transition-all duration-1000 delay-[${
+                index * 200
+              }ms] ${
+                isVisible
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-10'
+              }`}
+            >
+              <div className="relative group overflow-hidden rounded-3xl shadow-lg">
+                <img
+                  src={cake.image}
+                  alt={cake.title}
+                  className="w-full aspect-square object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:opacity-0" />
+                {cake.title && (
+                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
+                    <p className="text-white text-lg font-medium">
+                      {cake.title}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {hasMoreCakes && (
+          <div className="flex justify-center mt-12">
             <button
               onClick={handleShowMore}
-              className="mt-12 mx-auto block bg-[#722082] hover:bg-purple-700 text-white font-bold py-4 px-4 rounded-3xl shadow"
-              style={{
-                fontFamily: "Kornilow",
-                fontSize: "30px",
-                fontWeight: 400,
-                lineHeight: "29px",
-                textAlign: "center",
-                width: "302px",
-                height: "72px",
-              }}
+              className="bg-[#722082] hover:bg-[#8f35a1] text-white text-xl md:text-2xl py-4 px-8 rounded-full transition-all duration-300 hover:scale-105"
+              style={{ fontFamily: 'Kornilow' }}
             >
-              Посмотреть еще
+              Показать еще
             </button>
-          )}
-        </main>
+          </div>
+        )}
       </div>
-    </div>
+    </main>
   );
-}
+};
 
 export default Cake;

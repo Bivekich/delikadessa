@@ -1,93 +1,118 @@
-import React from "react";
-import logo from "../assets/logo.svg";
-import { FaTelegram, FaVk } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import React from 'react';
+import logo from '../assets/logo.svg';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <div className="mx-1 px-4">
-      <footer className="bg-white py-12">
-        <div className="mx-auto flex flex-col md:flex-row justify-between items-start">
-          <div className="flex items-center mb-4 md:mb-0">
-            <img src={logo} alt="logo" className="h-200 w-200 p-5" />
+    <footer className="bg-white py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-8">
+          <div className="flex items-center">
+            <img src={logo} alt="logo" className="h-20" />
           </div>
-          <div className="mb-4 md:mb-0 flex flex-col gap-3">
-            <h3 className="text-lg font-bold text-purple-700">Часы работы</h3>
-            <p className="text-gray-700">
+
+          <div className="flex flex-col gap-3">
+            <h3 className="text-lg font-bold text-[#722082]">Часы работы</h3>
+            <p className="text-[#7E6783]">
               понедельник - четверг: с 10:00 до 22:00
             </p>
-            <p className="text-gray-700">
+            <p className="text-[#7E6783]">
               пятница - воскресенье: с 10:00 до 22:00
             </p>
           </div>
-          <div className="mb-4 md:mb-0 flex flex-col gap-3">
-            <h3 className="text-lg font-bold text-purple-700">Навигация</h3>
-            <Link to="/" className="text-gray-700">
+
+          <div className="flex flex-col gap-3">
+            <h3 className="text-lg font-bold text-[#722082]">Навигация</h3>
+            <Link
+              to="/"
+              className="text-[#7E6783] hover:text-[#722082] transition-colors"
+            >
               Главная
             </Link>
-            <Link to="/gallery" className="text-gray-700">
+            <Link
+              to="/gallery"
+              className="text-[#7E6783] hover:text-[#722082] transition-colors"
+            >
               Галерея
             </Link>
-            <Link to="/menu" className="text-gray-700">
+            <Link
+              to="/menu"
+              className="text-[#7E6783] hover:text-[#722082] transition-colors"
+            >
               Меню
             </Link>
-            <Link to="/about" className="text-gray-700">
+            <Link
+              to="/about"
+              className="text-[#7E6783] hover:text-[#722082] transition-colors"
+            >
               О нас
             </Link>
-            <Link to="/cake" className="text-gray-700">
+            <Link
+              to="/cake"
+              className="text-[#7E6783] hover:text-[#722082] transition-colors"
+            >
               Торты на заказ
             </Link>
-            <Link to="/contact" className="text-gray-700">
+            <Link
+              to="/contact"
+              className="text-[#7E6783] hover:text-[#722082] transition-colors"
+            >
               Контакты
             </Link>
-            <Link to="/terassa" className="text-gray-700">
-              Терраса
-            </Link>
           </div>
-          <div className="mb-4 md:mb-0 flex flex-col gap-3">
-            <h3 className="text-lg font-bold text-purple-700">Контакты</h3>
-            <p className="text-gray-700">Телефон: +7 (925) 212-08-05</p>
-            <p className="text-gray-700">
+
+          <div className="flex flex-col gap-3">
+            <h3 className="text-lg font-bold text-[#722082]">Контакты</h3>
+            <p className="text-[#7E6783]">Телефон: +7 (925) 212-08-05</p>
+            <p className="text-[#7E6783]">Email: info@delikadessa.ru</p>
+            <p className="text-[#7E6783]">
               Адрес: Москва, Котельническая наб., 1/15А
             </p>
-            <p className="text-gray-700">ИНН / КПП: 5003135100 / 770501001</p>
-            <p className="text-gray-700">ОГРН: 1195027017437</p>
+            <p className="text-[#7E6783] mt-4 text-sm">
+              ООО &ldquo;ДЕЛИКАДЕССА&rdquo;
+            </p>
+            <p className="text-[#7E6783] text-sm">
+              ИНН / КПП: 5003135100 / 770501001
+            </p>
+            <p className="text-[#7E6783] text-sm">ОГРН: 1195027017437</p>
+            <p className="text-[#7E6783] text-sm">р/с: 40702810738000017012</p>
+            <p className="text-[#7E6783] text-sm">к/с: 30101810400000000225</p>
+            <p className="text-[#7E6783] text-sm">БИК: 044525225</p>
           </div>
-          <div>
-            <h3 className="text-lg font-bold text-purple-700">
-              Следите за нами
-            </h3>
-            <div className="flex flex-row gap-5 mt-3 justify-start">
-              <a
-                href="https://t.me/delikadessa"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaTelegram className="text-gray-700 text-2xl hover:text-purple-700 transition-colors" />
-              </a>
-              <a
-                href="https://vk.com/delikadessa"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FaVk className="text-gray-700 text-2xl hover:text-purple-700 transition-colors" />
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="mx-auto text-center text-gray-500 text-sm mt-6 flex flex-row justify-between border-t border-gray-200 pt-9">
-          <p>© 2024 Delikadessa. All Right Reserved.</p>
-          <div className="flex justify-center space-x-4 mt-2">
-            <a href="#" className="hover:text-purple-700">
-              Terms of Service
-            </a>
-            <a href="#" className="hover:text-purple-700">
-              Privacy Policy
-            </a>
+
+          <div className="flex flex-col gap-3">
+            <h3 className="text-lg font-bold text-[#722082]">Документы</h3>
+            <Link
+              to="/privacy"
+              className="text-[#7E6783] hover:text-[#722082] transition-colors"
+            >
+              Политика конфиденциальности
+            </Link>
+            <Link
+              to="/terms"
+              className="text-[#7E6783] hover:text-[#722082] transition-colors"
+            >
+              Пользовательское соглашение
+            </Link>
+            <Link
+              to="/offer"
+              className="text-[#7E6783] hover:text-[#722082] transition-colors"
+            >
+              Договор оферты
+            </Link>
           </div>
         </div>
-      </footer>
-    </div>
+
+        <div className="mt-8 pt-6 border-t border-[#722082]/20 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-[#7E6783] text-sm">
+            © {new Date().getFullYear()} Деликадесса. Все права защищены
+          </p>
+          <p className="text-[#7E6783] text-xs">
+            Информация на сайте не является публичной офертой
+          </p>
+        </div>
+      </div>
+    </footer>
   );
 };
 
