@@ -1,75 +1,76 @@
-import React from 'react'
-import g1 from '../assets/g1.png'
-import g2 from '../assets/g2.png'
-import g3 from '../assets/g3.png'
-import g4 from '../assets/g4.png'
-import g5 from '../assets/g5.png'
-import g6 from '../assets/g6.png'
-import g7 from '../assets/g7.png'
-import g8 from '../assets/g8.png'
+import React, { useState, useEffect } from "react";
+import { getGallery } from "../sanity";
 
 function Gallery() {
+  const [gallery, setGallery] = useState([]);
+  const [selectedType, setSelectedType] = useState("Внутри");
+  const [displayCount, setDisplayCount] = useState(8);
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      const gallery = await getGallery();
+      setGallery(gallery);
+    };
+    fetchGallery();
+  }, []);
+
+  useEffect(() => {
+    setDisplayCount(8); // Reset display count when type changes
+  }, [selectedType]);
+
+  const filteredGallery = gallery.filter((item) => item.type === selectedType);
+  const displayedGallery = filteredGallery.slice(0, displayCount);
+
+  const handleLoadMore = () => {
+    setDisplayCount((prevCount) => prevCount + 8);
+  };
+
   return (
     <div className="text-center py-8 overflow-hidden mx-auto px-4">
-      <h1 style={{
-        fontFamily: 'Kornilow',
-        fontSize: '60px',
-        fontWeight: 400,
-        lineHeight: '58px',
-        textAlign: 'center'
-      }} 
-      className="mb-6 text-[#722082]">
+      <h1 className="font-['Kornilow'] text-[40px] md:text-[60px] leading-[48px] md:leading-[58px] text-center mb-6 text-[#722082]">
         Галерея
       </h1>
-      <div className="flex justify-center space-x-24 mb-6">
-        <a href="#" 
-          style={{
-            fontFamily: 'Kornilow',
-            fontSize: '25px',
-            fontWeight: 400,
-            lineHeight: '85px',
-            textAlign: 'left',
-          }}
-          className="text-[#722082] hover:underline">
+      <div className="flex justify-center space-x-8 md:space-x-24 mb-6">
+        <button
+          onClick={() => setSelectedType("Внутри")}
+          className={`font-['Kornilow'] text-xl md:text-[25px] leading-[60px] md:leading-[85px] text-[#722082] hover:underline ${
+            selectedType === "Внутри" ? "underline" : ""
+          }`}
+        >
           Внутри
-        </a>
-        <a href="#" 
-          style={{
-            fontFamily: 'Kornilow',
-            fontSize: '25px',
-            fontWeight: 400,
-            lineHeight: '85px',
-            textAlign: 'left',
-          }}
-          className="text-[#722082] hover:underline">
+        </button>
+        <button
+          onClick={() => setSelectedType("Блюда")}
+          className={`font-['Kornilow'] text-xl md:text-[25px] leading-[60px] md:leading-[85px] text-[#722082] hover:underline ${
+            selectedType === "Блюда" ? "underline" : ""
+          }`}
+        >
           Блюда
-        </a>
+        </button>
       </div>
-      <div className="grid grid-cols-4 gap-8 px-8">
-        <img src={g1} alt="g1" className="rounded-lg w-full h-full object-cover transition-transform duration-300 hover:scale-110"/>
-        <img src={g2} alt="g2" className="rounded-lg w-full h-full object-cover transition-transform duration-300 hover:scale-110"/>
-        <img src={g3} alt="g3" className="rounded-lg w-full h-full object-cover transition-transform duration-300 hover:scale-110"/>
-        <img src={g4} alt="g4" className="rounded-lg w-full h-full object-cover transition-transform duration-300 hover:scale-110"/>
-        <img src={g5} alt="g5" className="rounded-lg w-full h-full object-cover transition-transform duration-300 hover:scale-110"/>
-        <img src={g6} alt="g6" className="rounded-lg w-full h-full object-cover transition-transform duration-300 hover:scale-110"/>
-        <img src={g7} alt="g7" className="rounded-lg w-full h-full object-cover transition-transform duration-300 hover:scale-110"/>
-        <img src={g8} alt="g8" className="rounded-lg w-full h-full object-cover transition-transform duration-300 hover:scale-110"/>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 px-2 md:px-8">
+        {displayedGallery.map((item, index) => (
+          <img
+            key={index}
+            src={item.image}
+            alt={item.title}
+            style={{
+              borderRadius: "50px 25px 50px 25px",
+            }}
+            className="rounded-lg w-full aspect-video object-cover transition-transform duration-300 hover:scale-110"
+          />
+        ))}
       </div>
-      <button 
-      className="mt-12 mx-auto block bg-[#722082] hover:bg-purple-700 text-white font-bold py-4 px-4 rounded-3xl shadow" 
-      style={{ 
-      fontFamily: 'Kornilow',
-      fontSize: '30px',
-      fontWeight: 400,
-      lineHeight: '29px',
-      textAlign: 'center',
-      width: '302px',
-      height: '72px',
-       }}>
-      Посмотреть еще
-    </button>
+      {filteredGallery.length > displayCount && (
+        <button
+          onClick={handleLoadMore}
+          className="mt-8 md:mt-12 mx-auto block bg-[#722082] hover:bg-purple-700 text-white font-['Kornilow'] text-2xl md:text-[30px] leading-[29px] w-[250px] md:w-[302px] h-[60px] md:h-[72px] rounded-3xl shadow"
+        >
+          Посмотреть еще
+        </button>
+      )}
     </div>
-  )
+  );
 }
 
-export default Gallery
+export default Gallery;

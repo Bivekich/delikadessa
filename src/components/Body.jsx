@@ -1,128 +1,221 @@
-import React from 'react'
-import main_image from '../assets/main_img.png'
+import React, { useEffect, useState, useRef } from "react";
+import main_image from "../assets/main_img.png";
+import { Button } from "./Button";
+import { getMainpage } from "../sanity";
 
 const Body = () => {
-  return (
-    <main className='pt-44' style={{ backgroundImage: `url(${main_image})` }}>
-     <section className="relative mx-auto" style={{
-        margin: '100px',
-        overflow: 'hidden'
-        }}>
-     <div className="relative ">
-                    <div className="relative flex flex-col items-start justify-center h-full p-6 md:p-10 text-white">
-                        <h1 className="text-3xl md:text-5xl font-bold mb-4 pt-100 pb-100"  style={{
-                          fontFamily: 'Kornilow',
-                          fontSize: 'clamp(2rem, 5vw + 1rem, 4rem)',
-                          fontWeight: 400,
-                          lineHeight: '85px',
-                          textAlign: 'left',
-                          textUnderlinePosition: 'from-font',
-                          textDecorationSkipInk: 'none'
-                        }}>Ресторан «ДеликАдесса» — место для приятных встреч</h1>
-                        <p className="text-base md:text-lg mb-4" style={{
-                          fontFamily: 'Inter',
-                          fontSize: 'clamp(1rem, 2vw + 0.5rem, 1.25rem)',
-                          fontWeight: 600,
-                          lineHeight: '29px',
-                          textAlign: 'left',
-                          textUnderlinePosition: 'from-font',
-                          textDecorationSkipInk: 'none'
-                        }}>Сезонные продукты, бережное отношение к традициям и современные техники приготовления - три главных принципа кухни ДеликАдессы.</p>
-                        <p className="text-base md:text-lg mb-4" style={{
-                          fontFamily: 'Inter',
-                          fontSize: 'clamp(1rem, 2vw + 0.5rem, 1.25rem)',
-                          fontWeight: 600,
-                          lineHeight: '29px',
-                          textAlign: 'left',
-                          textUnderlinePosition: 'from-font',
-                          textDecorationSkipInk: 'none'
-                        }}>В нашем ресторане каждый гость важен, поэтому мы учитываем любое пожелание, чтобы ваш вечер прошел незабываемо!</p>
-                        <p className="text-base md:text-lg mb-8" style={{
-                          fontFamily: 'Inter',
-                          fontSize: 'clamp(1rem, 2vw + 0.5rem, 1.25rem)',
-                          fontWeight: 600,
-                          lineHeight: '29px',
-                          textAlign: 'left',
-                          textUnderlinePosition: 'from-font',
-                          textDecorationSkipInk: 'none'
-                        }}>Будем ждать вас в гости, чтобы показать на примере, что такое изысканная кухня!</p>
-                        <button 
-                         className="mt-4 bg-[#722082] hover:bg-purple-700 mb-24 text-white font-bold py-2 px-4 rounded-tl-2xl rounded-br-2xl rounded-tr-md rounded-bl-md shadow w-full md:w-auto" 
-                         style={{ 
-                         fontFamily: 'Kornilow',
-                         fontSize: 'clamp(1.5rem, 2vw + 1rem, 30px)',
-                         fontWeight: 400,
-                         lineHeight: '29px',
-                         textAlign: 'center',
-                         textUnderlinePosition: 'from-font',
-                         textDecorationSkipInk: 'none',
-                         height: '72px',
-                         }}>Забронировать
-                       </button>
-                    </div>
-                </div>
-     </section>
-       <section className='pb-64'>
-       <div className="container mx-auto my-12 p-6 bg-white bg-opacity-0 rounded-[30px] shadow-md backdrop-blur-md">
-        <h2 className="text-center text-2xl font-bold text-[#722082]" style={{
-          fontFamily: 'Kornilow',
-          fontSize: '40px',
-          fontWeight: 400,
-          lineHeight: '85px',
-          textUnderlinePosition: 'from-font',
-          textDecorationSkipInk: 'none'
-        }}>Бронирование столика</h2>
-        <p className="text-center text-[#7E6783] mt-2" style={{
-          fontFamily: 'Kornilow',
-          fontSize: '28px',
-          fontWeight: 400,
-          lineHeight: '85px',
-          textUnderlinePosition: 'from-font',
-          textDecorationSkipInk: 'none'
-        }}>Для бронирования столика необходимо внести депозит в размере 3000Р</p>
-        <form className="mt-6 space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input type="text" placeholder="Имя" className="border border-[#722082] rounded-lg p-3 w-full"/>
-        <input type="text" placeholder="Фамилия" className="border border-[#722082] rounded-lg p-3 w-full"/>
-        </div>
-         <input type="email" placeholder="E-mail" className="border border-[#722082] rounded-lg p-3 w-full"/>
-          <input type="tel" placeholder="Телефон" className="border border-[#722082] rounded-lg p-3 w-full"/>
-         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-         <input type="date" className="border border-[#722082] rounded-lg p-3 w-full"/>
-         <input type="time" className="border border-[#722082] rounded-lg p-3 w-full"/>
-         </div>
-          <select className="border border-[#722082] rounded-lg p-3 w-full">
-           <option>2 человека</option>
-           <option>3 человека</option>
-           <option>4 человека</option>
-           <option>5 человек</option>
-           <option>6 человек</option>
-          </select>
-          <div className="flex justify-center w-full">
-            <button 
-              type="submit" 
-              className="bg-[#722082] hover:bg-purple-700 text-white"
-              style={{
-                fontFamily: 'Inter',
-                fontSize: '24px',
-                fontWeight: 600,
-                lineHeight: '33.6px',
-                letterSpacing: '0.02em',
-                width: '300px',
-                height: '94px',
-                padding: '30px 40px',
-                gap: '12px',
-                borderRadius: '30px',
-                position: 'relative',
-              }}>
-              Забронировать
-            </button>
-          </div>
-        </form>
-        </div>
-   </section>
-   </main>
-  )
-}
+  const [mainpage, setMainpage] = useState([]);
+  const [bookings, setBookings] = useState([]);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    date: "",
+    time: "",
+    guests: "2 человека",
+  });
+  const bookingRef = useRef(null);
 
-export default Body
+  useEffect(() => {
+    const fetchMainpage = async () => {
+      const mainpage = await getMainpage();
+      setMainpage(mainpage);
+    };
+    fetchMainpage();
+  }, []);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === "#book" && bookingRef.current) {
+        // Remove the hash after scrolling
+        setTimeout(() => {
+          bookingRef.current.scrollIntoView({ behavior: "smooth" });
+          history.pushState("", document.title, window.location.pathname);
+        }, 1000);
+      }
+    };
+
+    // Handle initial hash if present
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setBookings((prevBookings) => [...prevBookings, formData]);
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      date: "",
+      time: "",
+      guests: "2 человека",
+    });
+    console.log("All bookings:", bookings);
+  };
+
+  return (
+    <main className="bg-cover">
+      <section className="relative mx-auto mb-24 mt-12 overflow-hidden">
+        <div
+          style={{
+            backgroundImage: `url(${main_image})`,
+            borderRadius: "100px 50px 100px 50px",
+          }}
+          className="container mx-auto relative flex flex-col items-start justify-center h-full p-6 md:p-10 text-white bg-cover bg-center"
+        >
+          <h1
+            className="text-3xl md:text-5xl font-thin mb-4 pt-20 pb-0 text-white max-w-[700px]"
+            style={{
+              fontFamily: "Kornilow",
+              lineHeight: "65px",
+              textAlign: "left",
+            }}
+          >
+            {mainpage.title}
+          </h1>
+          <p
+            className="text-base md:text-lg mb-4 max-w-[700px]"
+            style={{
+              fontFamily: "Inter",
+              lineHeight: "29px",
+              textAlign: "left",
+            }}
+          >
+            {mainpage.description?.split("\n").map((line, i) => (
+              <React.Fragment key={i}>
+                {line}
+                <br />
+              </React.Fragment>
+            ))}
+          </p>
+          <div className="mt-20 mb-10">
+            <Button
+              style={{ fontFamily: "Kornilow" }}
+              className="font-thin py-4 px-7"
+              onClick={() =>
+                bookingRef.current.scrollIntoView({ behavior: "smooth" })
+              }
+            >
+              Забронировать
+            </Button>
+          </div>
+        </div>
+      </section>
+      <section ref={bookingRef} className="pb-64">
+        <div
+          style={{ borderRadius: "100px 50px 100px 50px" }}
+          className="container mx-auto my-12 p-6 bg-white shadow-2xl backdrop-blur-xl"
+        >
+          <h2
+            className="text-center text-2xl font-bold text-[#7E6783]"
+            style={{
+              fontFamily: "Kornilow",
+              fontSize: "40px",
+              lineHeight: "85px",
+            }}
+          >
+            Бронирование столика
+          </h2>
+          <p
+            className="text-center text-[#7E6783] mt-2"
+            style={{
+              fontFamily: "Kornilow",
+              fontSize: "28px",
+              lineHeight: "85px",
+            }}
+          >
+            Для бронирования столика необходимо внести депозит в размере 3000Р
+          </p>
+          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                placeholder="Имя"
+                className="border border-[#722082] rounded-lg p-3 w-full shadow-md"
+              />
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
+                placeholder="Фамилия"
+                className="border border-[#722082] rounded-lg p-3 w-full shadow-md"
+              />
+            </div>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              placeholder="E-mail"
+              className="border border-[#722082] rounded-lg p-3 w-full shadow-md"
+            />
+            <input
+              type="tel"
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              placeholder="Телефон"
+              className="border border-[#722082] rounded-lg p-3 w-full shadow-md"
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleInputChange}
+                className="border border-[#722082] rounded-lg p-3 w-full shadow-md"
+              />
+              <input
+                type="time"
+                name="time"
+                value={formData.time}
+                onChange={handleInputChange}
+                className="border border-[#722082] rounded-lg p-3 w-full shadow-md"
+              />
+            </div>
+            <select
+              name="guests"
+              value={formData.guests}
+              onChange={handleInputChange}
+              className="border border-[#722082] rounded-lg p-3 w-full shadow-md"
+            >
+              <option>2 человека</option>
+              <option>3 человека</option>
+              <option>4 человека</option>
+              <option>5 человек</option>
+              <option>6 человек</option>
+            </select>
+            <div className="flex justify-center w-full">
+              <button
+                type="submit"
+                className="bg-[#722082] hover:bg-purple-700 text-white font-bold text-2xl rounded-full w-72 h-24 shadow-lg"
+              >
+                Забронировать
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+  );
+};
+
+export default Body;
