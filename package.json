@@ -20,7 +20,8 @@
     "react-router-dom": "^7.0.1",
     "react-spinners": "^0.15.0",
     "react-transition-group": "^4.4.5",
-    "sass": "^1.69.0"
+    "sass": "^1.69.0",
+    "yookassa": "^0.1.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

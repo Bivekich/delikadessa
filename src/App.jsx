@@ -13,6 +13,7 @@ import Privacy from './components/Privacy';
 import Terms from './components/Terms';
 import Offer from './components/Offer';
 import ScrollToTop from './components/ScrollToTop';
+import Success from './components/Success';
 
 function App() {
   const bookingRef = useRef(null);
@@ -32,6 +33,7 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/offer" element={<Offer />} />
+        <Route path="/success" element={<Success />} />
       </Routes>
       <Footer />
     </Router>

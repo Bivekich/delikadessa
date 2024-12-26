@@ -3,6 +3,8 @@ import main_image from '../assets/main_img.png';
 import { Button } from './Button';
 import { getMainpage } from '../sanity';
 import Preloader from './Preloader';
+import { createPayment } from '../utils/payment';
+import { sendToTelegramNotification } from '../utils/telegram';
 
 const Body = ({ bookingRef }) => {
   const [mainpage, setMainpage] = useState([]);
@@ -61,19 +63,34 @@ const Body = ({ bookingRef }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setBookings((prevBookings) => [...prevBookings, formData]);
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      date: '',
-      time: '',
-      guests: '2 человека',
-    });
-    console.log('All bookings:', bookings);
+
+    try {
+      console.log('Отправка формы:', formData);
+
+      const payment = await createPayment(formData);
+      console.log('Платеж создан:', payment);
+
+      setBookings((prevBookings) => [...prevBookings, formData]);
+
+      if (payment.confirmation?.confirmation_url) {
+        localStorage.setItem(
+          'pendingBooking',
+          JSON.stringify({
+            bookingData: formData,
+            paymentId: payment.id,
+          })
+        );
+
+        window.location.href = payment.confirmation.confirmation_url;
+      } else {
+        throw new Error('Не получен URL для оплаты');
+      }
+    } catch (error) {
+      console.error('Ошибка при бронировании:', error);
+      alert('Произошла ошибка при бронировании. Пожалуйста, попробуйте снова.');
+    }
   };
 
   if (loading) {
@@ -222,7 +239,6 @@ const Body = ({ bookingRef }) => {
                   onChange={handleInputChange}
                   placeholder="E-mail"
                   required
-                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                   className="w-full px-4 py-3 rounded-xl border-2 border-[#722082]/30 focus:border-[#722082] outline-none transition-colors duration-300 shadow-sm hover:border-[#722082]/50"
                 />
               </div>
@@ -234,7 +250,8 @@ const Body = ({ bookingRef }) => {
                   onChange={handleInputChange}
                   placeholder="Телефон"
                   required
-                  pattern="[0-9+]{1}[0-9]{10}"
+                  pattern="[0-9]{11}"
+                  title="Пожалуйста, введите номер в формате 79991234567"
                   className="w-full px-4 py-3 rounded-xl border-2 border-[#722082]/30 focus:border-[#722082] outline-none transition-colors duration-300 shadow-sm hover:border-[#722082]/50"
                 />
               </div>
