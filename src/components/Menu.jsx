@@ -1,18 +1,27 @@
 import { useState, useEffect } from 'react';
-import { getMenu } from '../sanity';
+import { getMenu, getSeafood } from '../sanity';
 import { Link } from 'react-router-dom';
 import Preloader from './Preloader';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
 
 const Menu = () => {
   const [menu, setMenu] = useState([]);
+  const [seafood, setSeafood] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const fetchMenu = async () => {
+    const fetchData = async () => {
       try {
-        const menuData = await getMenu();
+        const [menuData, seafoodData] = await Promise.all([
+          getMenu(),
+          getSeafood(),
+        ]);
         setMenu(menuData);
+        setSeafood(seafoodData);
         setLoading(false);
         setTimeout(() => setIsVisible(true), 100);
       } catch (error) {
@@ -20,7 +29,7 @@ const Menu = () => {
         setLoading(false);
       }
     };
-    fetchMenu();
+    fetchData();
   }, []);
 
   return (
@@ -28,9 +37,63 @@ const Menu = () => {
       {loading ? (
         <Preloader />
       ) : (
-        <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="mb-4">
+            <h2
+              className={`text-2xl md:text-3xl font-bold text-[#722082] mb-4 text-center transition-all duration-1000 ${
+                isVisible
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-10'
+              }`}
+              style={{ fontFamily: 'Kornilow' }}
+            >
+              Живой аквариум
+            </h2>
+
+            <div
+              className={`transition-all duration-1000 mb-4 ${
+                isVisible
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-10'
+              }`}
+            >
+              <Swiper
+                effect={'coverflow'}
+                grabCursor={true}
+                centeredSlides={true}
+                slidesPerView={'auto'}
+                spaceBetween={20}
+                coverflowEffect={{
+                  rotate: 30,
+                  stretch: 0,
+                  depth: 50,
+                  modifier: 1,
+                  slideShadows: false,
+                }}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+                }}
+                modules={[EffectCoverflow, Autoplay]}
+                className="mySwiper"
+              >
+                {seafood.map((item) => (
+                  <SwiperSlide key={item._id}>
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-xl">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          </div>
+
           <h1
-            className={`text-3xl md:text-4xl font-bold text-[#722082] mb-12 text-center transition-all duration-1000 ${
+            className={`text-2xl md:text-3xl font-bold text-[#722082] mb-6 text-center transition-all duration-1000 ${
               isVisible
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-10'
@@ -40,11 +103,11 @@ const Menu = () => {
             Меню
           </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex justify-center flex-wrap gap-6 max-w-4xl mx-auto">
             {menu.map((category, index) => (
               <div
                 key={category._id}
-                className={`bg-white rounded-3xl shadow-md overflow-hidden transition-all duration-1000 delay-[${
+                className={`w-full sm:w-[calc(50%-0.75rem)] transition-all duration-1000 delay-[${
                   index * 200
                 }ms] ${
                   isVisible
@@ -53,44 +116,25 @@ const Menu = () => {
                 }`}
               >
                 <Link to={category.pdf} className="block">
-                  <div className="relative overflow-hidden group">
-                    <img
-                      src={category.image}
-                      alt={category.title}
-                      className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:opacity-0" />
+                  <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+                    <div className="relative overflow-hidden group">
+                      <img
+                        src={category.image}
+                        alt={category.title}
+                        className="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/20 transition-opacity duration-300 group-hover:opacity-0" />
+                    </div>
+                    <div className="p-4">
+                      <h2
+                        className="text-xl text-[#722082] text-center"
+                        style={{ fontFamily: 'Kornilow' }}
+                      >
+                        {category.title}
+                      </h2>
+                    </div>
                   </div>
                 </Link>
-
-                <div className="p-6">
-                  <h2
-                    className="text-2xl text-[#722082] mb-6"
-                    style={{ fontFamily: 'Kornilow' }}
-                  >
-                    {category.title}
-                  </h2>
-                  <div className="space-y-4">
-                    {category.items?.map((item) => (
-                      <div
-                        key={item._id}
-                        className="flex justify-between items-start"
-                      >
-                        <div>
-                          <h3 className="text-[#7E6783] font-medium">
-                            {item.name}
-                          </h3>
-                          <p className="text-sm text-[#7E6783]/70">
-                            {item.description}
-                          </p>
-                        </div>
-                        <p className="text-[#722082] font-bold ml-4">
-                          {item.price} ₽
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
               </div>
             ))}
           </div>

@@ -1,9 +1,9 @@
-import { createClient } from "@sanity/client";
+import { createClient } from '@sanity/client';
 
 export const client = createClient({
-  projectId: "o43vbwjs",
-  dataset: "production",
-  apiVersion: "v1",
+  projectId: 'o43vbwjs',
+  dataset: 'production',
+  apiVersion: 'v1',
   useCdn: true,
 });
 
@@ -54,4 +54,18 @@ export const getMainpage = async () => {
     '*[_type == "mainpage"][0]{title, description, "image": image.asset->url}'
   );
   return mainpage;
+};
+
+export const getSeafood = async () => {
+  const seafood = await client.fetch(
+    `*[_type == "seafood"] | order(order asc) {
+      _id,
+      title,
+      description,
+      price,
+      unit,
+      "image": image.asset->url
+    }`
+  );
+  return seafood;
 };
