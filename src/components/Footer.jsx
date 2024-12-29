@@ -64,7 +64,7 @@ const Footer = () => {
           <div className="flex flex-col gap-3">
             <h3 className="text-lg font-bold text-[#722082]">Контакты</h3>
             <p className="text-[#7E6783]">Телефон: +7 (925) 212-08-05</p>
-            <p className="text-[#7E6783]">Email: info@delikadessa.ru</p>
+            <p className="text-[#7E6783]">Email: delicadessa@yandex.ru</p>
             <p className="text-[#7E6783]">
               Адрес: Москва, Котельническая наб., 1/15А
             </p>
