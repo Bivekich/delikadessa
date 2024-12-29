@@ -21,6 +21,7 @@
     "react-spinners": "^0.15.0",
     "react-transition-group": "^4.4.5",
     "sass": "^1.69.0",
+    "swiper": "^11.1.15",
     "yookassa": "^0.1.1"
   },
   "devDependencies": {
