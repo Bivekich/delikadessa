@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import main_image from '../assets/main_img.png';
 import { Button } from './Button';
-import { getMainpage } from '../sanity';
+import { getMainpage, getContacts } from '../sanity';
 import Preloader from './Preloader';
 import { createPayment } from '../utils/payment';
-import { sendToTelegramNotification } from '../utils/telegram';
 
 const Body = ({ bookingRef }) => {
   const [mainpage, setMainpage] = useState([]);
-  const [bookings, setBookings] = useState([]);
+  const [contacts, setContacts] = useState(null);
+  const [workHours, setWorkHours] = useState(null);
   const [loading, setLoading] = useState(true);
   const [contentVisible, setContentVisible] = useState(false);
+  const [timeError, setTimeError] = useState('');
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -18,25 +19,43 @@ const Body = ({ bookingRef }) => {
     phone: '',
     date: '',
     time: '',
-    guests: '2 человека',
+    guests: '1 человек',
   });
 
   useEffect(() => {
-    const fetchMainpage = async () => {
+    const fetchData = async () => {
       try {
-        const mainpage = await getMainpage();
-        setMainpage(mainpage);
+        const [mainpageData, contactsData] = await Promise.all([
+          getMainpage(),
+          getContacts()
+        ]);
+        
+        setMainpage(mainpageData);
+        setContacts(contactsData);
+
+        // Parse worktime from contacts
+        if (contactsData?.worktime) {
+          const worktimeMatch = contactsData.worktime.match(/(?:с\s*)?(\d{1,2}:\d{2})(?:\s*-|\s*до\s*)(\d{1,2}:\d{2})/);
+          if (worktimeMatch) {
+            setWorkHours({
+              start: worktimeMatch[1],
+              end: worktimeMatch[2]
+            });
+          } else {
+            console.error('Could not parse work hours from:', contactsData.worktime);
+          }
+        }
+
         setLoading(false);
-        // Показываем контент сразу после загрузки данных
         setTimeout(() => {
           setContentVisible(true);
         }, 100);
       } catch (error) {
-        console.error('Error fetching mainpage:', error);
+        console.error('Error fetching data:', error);
         setLoading(false);
       }
     };
-    fetchMainpage();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -55,41 +74,95 @@ const Body = ({ bookingRef }) => {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  const validateDateTime = (date, time) => {
+    if (!date || !time) return true;
+
+    const now = new Date();
+    const [hours, minutes] = time.split(':').map(Number);
+    const selectedDate = new Date(date);
+    selectedDate.setHours(hours, minutes, 0, 0);
+
+    // If selected date is today, check if time is in the past
+    if (selectedDate.toDateString() === now.toDateString() && selectedDate < now) {
+      return false;
+    }
+
+    return true;
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setFormData(prevState => {
+      const newState = {
+        ...prevState,
+        [name]: value,
+      };
+
+      // Validate time when date or time changes
+      if (name === 'date' || name === 'time') {
+        setTimeError('');
+        
+        if (newState.date && newState.time) {
+          if (!validateDateTime(newState.date, newState.time)) {
+            setTimeError('Выбранное время уже прошло');
+          }
+
+          // Check if time is within working hours
+          if (workHours) {
+            const [selectedHours, selectedMinutes] = newState.time.split(':').map(Number);
+            const [startHours, startMinutes] = workHours.start.split(':').map(Number);
+            const [endHours, endMinutes] = workHours.end.split(':').map(Number);
+
+            const selectedTime = selectedHours * 60 + selectedMinutes;
+            const startTime = startHours * 60 + startMinutes;
+            const endTime = endHours * 60 + endMinutes;
+
+            // Handle case when restaurant works past midnight
+            if (endTime < startTime) {
+              if (selectedTime < startTime && selectedTime > endTime) {
+                setTimeError('Ресторан закрыт в это время');
+              }
+            } else {
+              if (selectedTime < startTime || selectedTime > endTime) {
+                setTimeError('Ресторан закрыт в это время');
+              }
+            }
+          }
+        }
+      }
+
+      return newState;
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Final validation before submission
+    if (timeError) {
+      alert('Пожалуйста, выберите корректное время бронирования');
+      return;
+    }
+
+    if (!validateDateTime(formData.date, formData.time)) {
+      alert('Выбранное время уже прошло');
+      return;
+    }
+
     try {
-      console.log('Отправка формы:', formData);
-
+      setLoading(true);
       const payment = await createPayment(formData);
-      console.log('Платеж создан:', payment);
-
-      setBookings((prevBookings) => [...prevBookings, formData]);
 
       if (payment.confirmation?.confirmation_url) {
-        localStorage.setItem(
-          'pendingBooking',
-          JSON.stringify({
-            bookingData: formData,
-            paymentId: payment.id,
-          })
-        );
-
         window.location.href = payment.confirmation.confirmation_url;
       } else {
         throw new Error('Не получен URL для оплаты');
       }
     } catch (error) {
       console.error('Ошибка при бронировании:', error);
-      alert('Произошла ошибка при бронировании. Пожалуйста, попробуйте снова.');
+      alert(error.message || 'Произошла ошибка при бронировании. Пожалуйста, попробуйте снова.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -269,16 +342,31 @@ const Body = ({ bookingRef }) => {
                 />
               </div>
               <div>
-                <input
-                  type="time"
-                  name="time"
-                  value={formData.time}
-                  onChange={handleInputChange}
-                  required
-                  min="12:00"
-                  max="23:00"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-[#722082]/30 focus:border-[#722082] outline-none transition-colors duration-300 shadow-sm hover:border-[#722082]/50 text-[#722082]/70"
-                />
+                {workHours ? (
+                  <>
+                    <input
+                      type="time"
+                      name="time"
+                      value={formData.time}
+                      onChange={handleInputChange}
+                      required
+                      min={workHours.start}
+                      max={workHours.end}
+                      className={`w-full px-4 py-3 rounded-xl border-2 ${
+                        timeError 
+                          ? 'border-red-500 focus:border-red-500' 
+                          : 'border-[#722082]/30 focus:border-[#722082]'
+                      } outline-none transition-colors duration-300 shadow-sm hover:border-[#722082]/50 text-[#722082]/70`}
+                    />
+                    <p className={`text-sm mt-1 ${timeError ? 'text-red-500' : 'text-gray-500'}`}>
+                      {timeError || `Время работы: ${workHours.start} - ${workHours.end}`}
+                    </p>
+                  </>
+                ) : (
+                  <div className="text-center text-gray-500">
+                    Загрузка времени работы...
+                  </div>
+                )}
               </div>
               <div className="relative">
                 <select
@@ -289,6 +377,7 @@ const Body = ({ bookingRef }) => {
                   className="w-full px-4 py-3 rounded-xl border-2 border-[#722082]/30 focus:border-[#722082] outline-none transition-colors duration-300 shadow-sm hover:border-[#722082]/50 appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTcgMTBsNSA1IDUtNXoiIGZpbGw9IiM3MjIwODIiLz48L3N2Zz4=')] bg-no-repeat bg-[center_right_1rem] text-[#722082]/70 relative z-10"
                 >
                   <option value="">Выберите количество гостей</option>
+                  <option value="1 человек">1 человек</option>
                   <option value="2 человека">2 человека</option>
                   <option value="3 человека">3 человека</option>
                   <option value="4 человека">4 человека</option>

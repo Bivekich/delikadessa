@@ -1,48 +1,72 @@
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+
+/**
+ * Creates a payment with YooKassa
+ * @param {Object} bookingData - The booking data from the form
+ * @returns {Promise<Object>} - The payment data from YooKassa
+ */
 export const createPayment = async (bookingData) => {
-  const shopId = '1006581';
-  const secretKey = 'test_fijZBU_8im47kTLZpFBaPvRqu8UqZN2rfVj7I1ibpxk';
-
-  const paymentData = {
-    amount: {
-      value: '3000.00',
-      currency: 'RUB',
-    },
-    capture: true,
-    confirmation: {
-      type: 'redirect',
-      return_url: `${window.location.origin}/success`,
-    },
-    description: `Бронирование столика на ${bookingData.date} ${bookingData.time}`,
-    metadata: bookingData,
-  };
-
   try {
-    console.log('Отправка запроса на создание платежа:', paymentData);
-
-    const response = await fetch('https://api.yookassa.ru/v3/payments', {
+    const response = await fetch(`${API_URL}/create-payment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Idempotence-Key': Date.now().toString(),
-        Authorization: 'Basic ' + btoa(`${shopId}:${secretKey}`),
       },
-      body: JSON.stringify(paymentData),
+      body: JSON.stringify({ bookingData })
     });
 
-    console.log('Статус ответа:', response.status);
-
     const responseData = await response.json();
-    console.log('Ответ от ЮKassa:', responseData);
 
     if (!response.ok) {
-      throw new Error(
-        `Ошибка оплаты: ${responseData.description || response.statusText}`
-      );
+      throw new Error(responseData.error || 'Ошибка при создании платежа');
+    }
+
+    // Store booking data in localStorage for later use
+    localStorage.setItem('pendingBooking', JSON.stringify({
+      bookingData,
+      paymentId: responseData.id
+    }));
+
+    return responseData;
+  } catch (error) {
+    console.error('Payment creation error:', error);
+    throw error;
+  }
+};
+
+/**
+ * Checks the status of a payment
+ * @param {string} paymentId - The payment ID from YooKassa
+ * @returns {Promise<Object>} - The payment status data
+ */
+export const checkPaymentStatus = async (paymentId) => {
+  try {
+    const response = await fetch(`${API_URL}/check-payment/${paymentId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(responseData.error || 'Ошибка при проверке статуса платежа');
     }
 
     return responseData;
   } catch (error) {
-    console.error('Payment error:', error);
+    console.error('Payment status check error:', error);
     throw error;
   }
+};
+
+/**
+ * Validates payment amount
+ * @param {string} amount - The payment amount
+ * @returns {boolean} - Whether the amount is valid
+ */
+export const validatePaymentAmount = (amount) => {
+  const numAmount = parseFloat(amount);
+  return !isNaN(numAmount) && numAmount >= 3000;
 };
