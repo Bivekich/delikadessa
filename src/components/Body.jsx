@@ -27,22 +27,27 @@ const Body = ({ bookingRef }) => {
       try {
         const [mainpageData, contactsData] = await Promise.all([
           getMainpage(),
-          getContacts()
+          getContacts(),
         ]);
-        
+
         setMainpage(mainpageData);
         setContacts(contactsData);
 
         // Parse worktime from contacts
         if (contactsData?.worktime) {
-          const worktimeMatch = contactsData.worktime.match(/(?:с\s*)?(\d{1,2}:\d{2})(?:\s*-|\s*до\s*)(\d{1,2}:\d{2})/);
+          const worktimeMatch = contactsData.worktime.match(
+            /(?:с\s*)?(\d{1,2}:\d{2})(?:\s*-|\s*до\s*)(\d{1,2}:\d{2})/
+          );
           if (worktimeMatch) {
             setWorkHours({
               start: worktimeMatch[1],
-              end: worktimeMatch[2]
+              end: worktimeMatch[2],
             });
           } else {
-            console.error('Could not parse work hours from:', contactsData.worktime);
+            console.error(
+              'Could not parse work hours from:',
+              contactsData.worktime
+            );
           }
         }
 
@@ -83,7 +88,10 @@ const Body = ({ bookingRef }) => {
     selectedDate.setHours(hours, minutes, 0, 0);
 
     // If selected date is today, check if time is in the past
-    if (selectedDate.toDateString() === now.toDateString() && selectedDate < now) {
+    if (
+      selectedDate.toDateString() === now.toDateString() &&
+      selectedDate < now
+    ) {
       return false;
     }
 
@@ -92,7 +100,7 @@ const Body = ({ bookingRef }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => {
+    setFormData((prevState) => {
       const newState = {
         ...prevState,
         [name]: value,
@@ -101,7 +109,7 @@ const Body = ({ bookingRef }) => {
       // Validate time when date or time changes
       if (name === 'date' || name === 'time') {
         setTimeError('');
-        
+
         if (newState.date && newState.time) {
           if (!validateDateTime(newState.date, newState.time)) {
             setTimeError('Выбранное время уже прошло');
@@ -109,8 +117,12 @@ const Body = ({ bookingRef }) => {
 
           // Check if time is within working hours
           if (workHours) {
-            const [selectedHours, selectedMinutes] = newState.time.split(':').map(Number);
-            const [startHours, startMinutes] = workHours.start.split(':').map(Number);
+            const [selectedHours, selectedMinutes] = newState.time
+              .split(':')
+              .map(Number);
+            const [startHours, startMinutes] = workHours.start
+              .split(':')
+              .map(Number);
             const [endHours, endMinutes] = workHours.end.split(':').map(Number);
 
             const selectedTime = selectedHours * 60 + selectedMinutes;
@@ -160,10 +172,31 @@ const Body = ({ bookingRef }) => {
       }
     } catch (error) {
       console.error('Ошибка при бронировании:', error);
-      alert(error.message || 'Произошла ошибка при бронировании. Пожалуйста, попробуйте снова.');
+      alert(
+        error.message ||
+          'Произошла ошибка при бронировании. Пожалуйста, попробуйте снова.'
+      );
     } finally {
       setLoading(false);
     }
+  };
+
+  // Функция для расчета стоимости в зависимости от количества гостей
+  const calculatePrice = (guests) => {
+    // Извлекаем только число из строки (например, "5 человек" -> 5)
+    // Добавляем проверку на undefined или пустую строку
+    if (!guests) return 3000;
+
+    const guestCount = parseInt(guests);
+    if (isNaN(guestCount)) return 3000;
+
+    if (guestCount <= 2) return 3000;
+    if (guestCount <= 4) return 6000;
+    if (guestCount <= 8) return 9000;
+    if (guestCount <= 12) return 12000;
+
+    // Если что-то пошло не так, возвращаем базовую цену
+    return 3000;
   };
 
   if (loading) {
@@ -275,7 +308,8 @@ const Body = ({ bookingRef }) => {
               lineHeight: '1.3',
             }}
           >
-            Для бронирования столика необходимо внести депозит в размере 3000Р
+            Для бронирования столика необходимо внести депозит в размере{' '}
+            {calculatePrice(formData.guests).toLocaleString()}₽
           </p>
 
           <form onSubmit={handleSubmit} className="mt-8 md:mt-10 space-y-6">
@@ -353,13 +387,18 @@ const Body = ({ bookingRef }) => {
                       min={workHours.start}
                       max={workHours.end}
                       className={`w-full px-4 py-3 rounded-xl border-2 ${
-                        timeError 
-                          ? 'border-red-500 focus:border-red-500' 
+                        timeError
+                          ? 'border-red-500 focus:border-red-500'
                           : 'border-[#722082]/30 focus:border-[#722082]'
                       } outline-none transition-colors duration-300 shadow-sm hover:border-[#722082]/50 text-[#722082]/70`}
                     />
-                    <p className={`text-sm mt-1 ${timeError ? 'text-red-500' : 'text-gray-500'}`}>
-                      {timeError || `Время работы: ${workHours.start} - ${workHours.end}`}
+                    <p
+                      className={`text-sm mt-1 ${
+                        timeError ? 'text-red-500' : 'text-gray-500'
+                      }`}
+                    >
+                      {timeError ||
+                        `Время работы: ${workHours.start} - ${workHours.end}`}
                     </p>
                   </>
                 ) : (
@@ -383,6 +422,12 @@ const Body = ({ bookingRef }) => {
                   <option value="4 человека">4 человека</option>
                   <option value="5 человек">5 человек</option>
                   <option value="6 человек">6 человек</option>
+                  <option value="7 человек">7 человек</option>
+                  <option value="8 человек">8 человек</option>
+                  <option value="9 человек">9 человек</option>
+                  <option value="10 человек">10 человек</option>
+                  <option value="11 человек">11 человек</option>
+                  <option value="12 человек">12 человек</option>
                 </select>
               </div>
             </div>
