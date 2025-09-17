@@ -45,9 +45,9 @@ const Navbar = ({ bookingRef }) => {
           }`}
         >
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <p className="text-xs sm:text-sm md:text-base font-semibold tracking-[0.15em] uppercase">
+            <p className="text-sm sm:text-base md:text-lg font-semibold tracking-[0.15em] uppercase">
               Любимые гости! В связи с проведением технического переоборудования и косметического
-              ремонтом ресторан будет закрыт с 01.10.25г по 12.10.25г. Ждем вас с нетерпением с 13.10.25г!
+              ремонта ресторан будет закрыт с 01.10.25г по 12.10.25г. Ждем вас с нетерпением с 13.10.25г!
             </p>
           </div>
         </div>
