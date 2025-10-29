@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from '../assets/logo.svg';
 import place from '../assets/place.svg';
 import { Button } from './Button';
 import { getContacts } from '../sanity';
 
 const Navbar = ({ bookingRef }) => {
-  const location = useLocation();
   const [contacts, setContacts] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -39,18 +38,6 @@ const Navbar = ({ bookingRef }) => {
   return (
     <>
       <main className="w-full">
-        <div
-          className={`relative z-[10000] bg-gradient-to-r from-[#612675] via-[#a355b3] to-[#f3c8e9] text-white transition-all duration-1000 transform shadow-[0_10px_30px_-15px_rgba(97,38,117,0.8)] ${
-            isLoaded ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-          }`}
-        >
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <p className="text-sm sm:text-base md:text-lg font-semibold tracking-[0.15em] uppercase">
-              Любимые гости! В связи с проведением технического переоборудования и косметического
-              ремонта ресторан будет закрыт с 01.10.25г по 12.10.25г. Ждем вас с нетерпением с 13.10.25г!
-            </p>
-          </div>
-        </div>
         <nav
           className={`top-0 left-0 w-full z-[9999] bg-white transition-all duration-1000 transform ${
             isLoaded
