@@ -3,6 +3,7 @@ import logo1 from '../assets/logo1.svg';
 import contact from '../assets/contact.png';
 import { getContacts } from '../sanity';
 import Preloader from './Preloader';
+import SEO from './SEO';
 
 function Contact() {
   const [contacts, setContacts] = useState([]);
@@ -70,7 +71,14 @@ function Contact() {
   }
 
   return (
-    <main
+    <>
+      <SEO
+        title="Контакты ресторана Деликадесса | Адрес, телефон, время работы"
+        description="Контакты ресторана Деликадесса в Москве: адрес, телефон, время работы, как добраться. Забронируйте столик по телефону или онлайн."
+        keywords="деликадесса контакты, ресторан москва адрес, телефон ресторана, время работы"
+        ogImage="/contact-og.jpg"
+      />
+      <main
       className="min-h-screen bg-cover bg-center relative py-12"
       style={{
         backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url(${contact})`,
@@ -171,6 +179,7 @@ function Contact() {
         </div>
       </div>
     </main>
+    </>
   );
 }
 

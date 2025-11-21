@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getTerrassa } from '../sanity';
 import Preloader from './Preloader';
+import SEO from './SEO';
 
 const Terassa = () => {
   const [terassa, setTerrassa] = useState([]);
@@ -27,7 +28,14 @@ const Terassa = () => {
   }
 
   return (
-    <main
+    <>
+      <SEO
+        title="Летняя терраса ресторана Деликадесса | Открытая веранда"
+        description="Летняя терраса ресторана Деликадесса в Москве: уютная открытая веранда, прекрасный вид, комфортная атмосфера. Забронируйте столик на террасе."
+        keywords="терраса деликадесса, летняя терраса москва, ресторан с верандой, открытая терраса"
+        ogImage="/terassa-og.jpg"
+      />
+      <main
       className="min-h-screen bg-fixed bg-cover bg-center relative"
       style={{ backgroundImage: `url(${terassa.image})` }}
     >
@@ -91,6 +99,7 @@ const Terassa = () => {
         </div>
       </div>
     </main>
+    </>
   );
 };
 

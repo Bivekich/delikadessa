@@ -69,3 +69,53 @@ export const getSeafood = async () => {
   );
   return seafood;
 };
+
+export const getReviews = async () => {
+  const reviews = await client.fetch(
+    `*[_type == "reviews"] | order(_createdAt desc) {
+      _id,
+      name,
+      text,
+      rating,
+      date,
+      "image": image.asset->url,
+      "avatar": avatar.asset->url
+    }`
+  );
+  return reviews;
+};
+
+export const getAdvantages = async () => {
+  const advantages = await client.fetch(
+    `*[_type == "advantages"] | order(order asc) {
+      _id,
+      title,
+      number,
+      suffix,
+      description,
+      icon,
+      order
+    }`
+  );
+  return advantages;
+};
+
+export const getPromotions = async () => {
+  const promotions = await client.fetch(
+    `*[_type == "promotions" && isActive == true] | order(order asc) {
+      _id,
+      title,
+      description,
+      discount,
+      conditions,
+      promoCode,
+      "image": image.asset->url,
+      validFrom,
+      validUntil,
+      isActive,
+      bookingLink,
+      order
+    }`
+  );
+  return promotions;
+};

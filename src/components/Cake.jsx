@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getCakes } from '../sanity';
 import Preloader from './Preloader';
+import SEO from './SEO';
 
 const Cake = () => {
   const [cakes, setCakes] = useState([]);
@@ -35,7 +36,14 @@ const Cake = () => {
   }
 
   return (
-    <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <>
+      <SEO
+        title="Торты на заказ в Деликадесса | Авторские кондитерские изделия"
+        description="Торты на заказ в ресторане Деликадесса: авторские десерты, индивидуальный дизайн, натуральные ингредиенты. Заказывайте торты для праздников и мероприятий."
+        keywords="торты на заказ москва, деликадесса торты, авторские торты, кондитерская, десерты"
+        ogImage="/cake-og.jpg"
+      />
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div
         className={`transition-all duration-1000 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -106,6 +114,7 @@ const Cake = () => {
         )}
       </div>
     </main>
+    </>
   );
 };
 

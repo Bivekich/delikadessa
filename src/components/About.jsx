@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { getAboutUs, getTerrassa } from '../sanity';
 import { useState, useEffect } from 'react';
 import Preloader from './Preloader';
+import SEO from './SEO';
 
 function About() {
   const [aboutUs, setAboutUs] = useState([]);
@@ -34,7 +35,14 @@ function About() {
   }
 
   return (
-    <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <>
+      <SEO
+        title="О ресторане Деликадесса | История и концепция"
+        description="Узнайте историю ресторана Деликадесса в Москве. Наша концепция, команда профессионалов и уникальная атмосфера. Забронируйте столик онлайн."
+        keywords="о ресторане деликадесса, ресторан москва история, концепция ресторана"
+        ogImage="/about-og.jpg"
+      />
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div
         className={`transition-all duration-1000 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -130,6 +138,7 @@ function About() {
         </div>
       </div>
     </main>
+    </>
   );
 }
 

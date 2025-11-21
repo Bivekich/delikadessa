@@ -4,6 +4,11 @@ import { Button } from './Button';
 import { getMainpage, getContacts } from '../sanity';
 import Preloader from './Preloader';
 import { createPayment } from '../utils/payment';
+import SEO from './SEO';
+import StructuredData from './StructuredData';
+import Reviews from './Reviews';
+import Advantages from './Advantages';
+import Promotions from './Promotions';
 
 const Body = ({ bookingRef }) => {
   const [mainpage, setMainpage] = useState([]);
@@ -204,7 +209,15 @@ const Body = ({ bookingRef }) => {
   }
 
   return (
-    <main className="bg-cover min-h-screen pt-12">
+    <>
+      <SEO
+        title="Ресторан Деликадесса | Изысканная кухня в центре Москвы"
+        description="Ресторан Деликадесса - изысканная кухня в центре Москвы. Бронирование столиков онлайн, авторское меню, уютная атмосфера. Доставка, банкеты, торты на заказ."
+        keywords="ресторан москва, деликадесса, бронирование столиков, авторская кухня, доставка еды, банкеты, торты на заказ"
+        ogType="restaurant"
+      />
+      <StructuredData type="restaurant" includeReviews={true} />
+      <main className="bg-cover min-h-screen pt-12">
       <section className="relative mx-auto mb-12 md:mb-24 mt-4 md:mt-8 px-4 sm:px-6 lg:px-8">
         <div
           style={{
@@ -442,7 +455,17 @@ const Body = ({ bookingRef }) => {
           </form>
         </div>
       </section>
+
+      {/* Секция с акциями и скидками */}
+      <Promotions />
+
+      {/* Секция с преимуществами */}
+      <Advantages />
+
+      {/* Секция с отзывами */}
+      <Reviews />
     </main>
+    </>
   );
 };
 

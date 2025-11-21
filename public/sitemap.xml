@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Главная страница -->
+  <url>
+    <loc>https://delikadessa.ru/</loc>
+    <lastmod>2024-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Галерея -->
+  <url>
+    <loc>https://delikadessa.ru/gallery</loc>
+    <lastmod>2024-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Меню -->
+  <url>
+    <loc>https://delikadessa.ru/menu</loc>
+    <lastmod>2024-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- О нас -->
+  <url>
+    <loc>https://delikadessa.ru/about</loc>
+    <lastmod>2024-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Торты -->
+  <url>
+    <loc>https://delikadessa.ru/cake</loc>
+    <lastmod>2024-11-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Контакты -->
+  <url>
+    <loc>https://delikadessa.ru/contact</loc>
+    <lastmod>2024-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Терасса -->
+  <url>
+    <loc>https://delikadessa.ru/terassa</loc>
+    <lastmod>2024-11-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Политика конфиденциальности -->
+  <url>
+    <loc>https://delikadessa.ru/privacy</loc>
+    <lastmod>2024-11-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Условия использования -->
+  <url>
+    <loc>https://delikadessa.ru/terms</loc>
+    <lastmod>2024-11-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Публичная оферта -->
+  <url>
+    <loc>https://delikadessa.ru/offer</loc>
+    <lastmod>2024-11-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

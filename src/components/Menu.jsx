@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import Preloader from './Preloader';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Autoplay } from 'swiper/modules';
+import SEO from './SEO';
+import StructuredData from './StructuredData';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 
@@ -34,6 +36,13 @@ const Menu = () => {
 
   return (
     <>
+      <SEO
+        title="Меню ресторана Деликадесса | Авторские блюда и морепродукты"
+        description="Изысканное меню ресторана Деликадесса: живой аквариум с морепродуктами, авторские блюда европейской кухни, большой выбор вин. Онлайн бронирование столиков."
+        keywords="меню ресторана, деликадесса меню, морепродукты москва, живой аквариум, европейская кухня"
+        ogImage="/menu-og.jpg"
+      />
+      <StructuredData type="restaurant" />
       {loading ? (
         <Preloader />
       ) : (

@@ -1,0 +1,17 @@
+# robots.txt для Деликадесса
+User-agent: *
+Allow: /
+
+# Запрещаем индексацию служебных страниц
+Disallow: /api/
+Disallow: /*.json$
+
+# Основные поисковые боты
+User-agent: Yandex
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# Ссылка на sitemap
+Sitemap: https://delikadessa.ru/sitemap.xml
